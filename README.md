@@ -1,2 +1,2 @@
 # yummypenang-web-application
-A food website that display Top Penang Foods
+Yummy Penang is a web application where enable users to view the top Penang food recommendations. The recommendations are classified by categories and each category contains a list of food eateries with details. Users can up vote or down vote the food eateries and the food eateries are sorted by the highest vote to the lowest vote. Users are required to register before voting those food eateries. If users wish to submit any recommendations, they can fill up the form and submit to admin for approval to be listed in Yummy Penang.
