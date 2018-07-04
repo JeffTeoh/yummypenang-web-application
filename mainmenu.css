@@ -9,6 +9,22 @@
 	}
 }
 
+/*.container {
+	margin: 0;
+}*/
+
+.nopadding {
+	padding: 0;
+}
+
+.nomargin {
+	margin: 0;
+}
+
+.nobreak {
+	white-space: nowrap;
+}
+
 /* center the text over image */
 .container {
 	position: relative;
