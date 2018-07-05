@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link rel="stylesheet" href="mainmenu.css">
+
+    <title>Login</title>
+  </head>
+  <body>
+    <!--top navigation bar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="mainmenu.html">YUMMY PENANG</a>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div id="loginbox" class="mt-5 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <div class="panel-title">Login</div>
+              <div style="float: right; font-size: 80%; position: relative; top: -10px;"><a href="#">Forget password?</a></div>
+            </div>
+            <div class="panel-body p-3">
+              <form id="loginform" role="form" autocomplete="off">
+                <div class="input-group mb-3">
+                   <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                  </div>
+                  <input id="loginEmail" type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon" name="email" required>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                  </div>
+                  <input id="loginPsw" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon" required>
+                </div>
+                <div class="form-group mt-1">
+                  <button type="submit" class="btn btn-success" id="loginBtn">Login</button>
+                </div>
+                <div class="form-group mt-2">
+                  <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
+          	        Don't have an account! 
+          	      	<a href="#" id="goRegister">
+          	          Register Here
+          	      	</a>
+          	      </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div id="registerbox" class="mt-5 col-md-6 offset-md-3 col-sm-8 offset-sm-2 d-none">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <div class="panel-title">Register</div>
+              <div style="float: right; font-size: 80%; position: relative; top: -10px;">
+                <a href="#" id="goLogin">Login</a>
+              </div>
+            </div>
+            <div class="panel-body p-3">
+              <form id="registerform" role="form" autocomplete="off">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <div>
+                    <input id="regEmail" type="email" id="email" class="form-control" placeholder="Email" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="psw">Password</label>
+                  <div>
+                    <input id="regPsw" type="password" id="psw" class="form-control" placeholder="Password" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="confirmpsw">Confirm password</label>
+                  <div>
+                    <input id="regConPsw" type="password" id="confirmpsw" class="form-control" placeholder="Confirm password" required>
+                  </div>
+                </div>
+                <div class="form-group mt-1">
+                  <button type="submit" class="btn btn-primary" id="registerBtn">Register</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script>
+      $("#loginBtn").click(function(){
+        //login to account
+      });
+
+      $("#registerBtn").click(function(){
+        //register to account
+      });
+
+      $("#goRegister").click(function(){
+        $("#loginbox").addClass("d-none");
+        $("#registerbox").removeClass("d-none");
+        $(":input").val('');
+        document.title = "Register";
+      });
+
+      $("#goLogin").click(function(){
+        $("#loginbox").removeClass("d-none");
+        $("#registerbox").addClass("d-none");
+        document.title = "Login";
+      });
+
+      $("#loginform").validate();
+      $("#registerform").validate();
+    </script>
+  </body>
+</html>

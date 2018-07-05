@@ -1,9 +1,5 @@
 @media (min-width: 1024px) {
 	/* navbar */
-	#loginBtn {
-		border: 1px solid black;
-	}
-
 	#signupBtn:hover {
 		text-decoration: underline;
 	}
@@ -26,7 +22,7 @@
 }
 
 /* center the text over image */
-.container {
+.categories {
 	position: relative;
     text-align: center;
     color: white;
@@ -116,4 +112,19 @@
 
 .footer p{
 	color: white;
+}
+
+/* login.html */
+.panel-heading {
+	border: 2px solid #00FFFF;
+	border-bottom: 0;
+	padding: 1rem;
+	background: #00FFFF;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.panel-body {
+	border: 2px solid #00FFFF;
+	border-top: 0;
 }
