@@ -2,6 +2,10 @@
 	.info {
 		margin-top: 1rem;
 	}
+
+	.vote {
+		padding: 0;
+	}
 }
 
 @media (min-width: 1024px) {
