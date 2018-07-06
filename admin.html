@@ -10,10 +10,9 @@
     <link rel="stylesheet" href="mainmenu.css">
     <link rel="stylesheet" href="jquery-upvote/lib/jquery.upvote.css">
 
-    <title>Laksa</title>
+    <title>Admin</title>
   </head>
   <body>
-    <!--top navigation bar-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <a class="navbar-brand" href="mainmenu.html">YUMMY PENANG</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +31,27 @@
       </div>
     </nav>
 
+    <div class="container">
+      <div class="dropdown mt-5">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown button
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Laksa</a>
+          <a class="dropdown-item" href="#">Char Koay Teow</a>
+          <a class="dropdown-item" href="#">Fried Oyster</a>
+          <a class="dropdown-item" href="#">Cendol</a>
+          <a class="dropdown-item" href="#">Hae Mee</a>
+          <a class="dropdown-item" href="#">Wantan Mee</a>
+          <a class="dropdown-item" href="#">Curry Mee</a>
+          <a class="dropdown-item" href="#">Loh Bak</a>
+          <a class="dropdown-item" href="#">Rojak</a>
+          <a class="dropdown-item" href="#">Mang Chang Kuih</a>
+        </div>
+      </div>
+    </div>
+
+    <!--laksa-->
     <ul class="list-group mt-5">
       <li class="list-group-item">
         <div class="container">
@@ -60,6 +80,16 @@
                 <span class="count">0</span>
                 <a class="downvote"></a>
               </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <!-- Button (Double) -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="approvereject"></label>
+            <div class="col-md-3 offset-md-9">
+              <button name="approve" class="btn btn-success" id="approve">Approve</button>
+              <button name="reject" class="btn btn-danger" id="cancel">Reject</button>
             </div>
           </div>
         </div>
@@ -126,31 +156,26 @@
       </li>
     </ul>
 
-    <footer class="footer mt-5">
-      <p>ABOUT US</p>
-    </footer>
- 
+    <!--laksa-->
+    <!--laksa-->
+    <!--laksa-->
+    <!--laksa-->
+    <!--laksa-->
+    <!--laksa-->
+    <!--laksa-->
+    <!--laksa-->
+    <!--laksa-->
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="jquery-upvote/lib/jquery.upvote.js"></script>
-    <script>
-      $('#topic').upvote();
-      $('#topic2').upvote();
-      $('#topic3').upvote();
-
-      var callback = function(data) {
-        $.ajax({
-          url: '/vote',
-          type: 'post',
-          data: { id: data.id, up: data.upvoted, down: data.downvoted }
-        });
-      };
-      $('#topic-123').upvote({id: 123, callback: callback});
-      $('#topic2-123').upvote({id: 123, callback: callback});
-      $('#topic3-123').upvote({id: 123, callback: callback});
+    <script>      
+      $(".dropdown-item").click(function(){
+        console.log($(this).html());
+      });
     </script>
   </body>
 </html>

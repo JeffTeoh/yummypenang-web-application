@@ -104,14 +104,17 @@
 
 /* footer */
 .footer{
-	height: 10rem;
-	background-color:black;
+	background-color:yellow;
 	font-family:sans-serif;
 	font-size:15px;
 }
 
 .footer p{
 	color: white;
+}
+
+.suggestion-body {
+	background: white;
 }
 
 /* login.html */
