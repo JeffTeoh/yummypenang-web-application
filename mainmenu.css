@@ -131,3 +131,8 @@
 	border: 2px solid #00FFFF;
 	border-top: 0;
 }
+
+/* map search box */
+#mapsearch {
+  width: 100%;
+}
