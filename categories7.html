@@ -58,9 +58,9 @@
             </div>
             <div class="col-2 vote">
               <div id="topic" class="upvote">
-                <a class="upvote"></a>
+                <a class="upvote voteClick"></a>
                 <span class="count">0</span>
-                <a class="downvote"></a>
+                <a class="downvote voteClick"></a>
               </div>
             </div>
           </div>
@@ -89,9 +89,9 @@
             </div>
             <div class="col-2 vote">
               <div id="topic2" class="upvote">
-                <a class="upvote"></a>
+                <a class="upvote voteClick"></a>
                 <span class="count">0</span>
-                <a class="downvote"></a>
+                <a class="downvote voteClick"></a>
               </div>
             </div>
           </div>
@@ -119,9 +119,9 @@
             </div>
             <div class="col-2 vote">
               <div id="topic3" class="upvote">
-                <a class="upvote"></a>
+                <a class="upvote voteClick"></a>
                 <span class="count">0</span>
-                <a class="downvote"></a>
+                <a class="downvote voteClick"></a>
               </div>
             </div>
           </div>
@@ -216,6 +216,15 @@
       $('#topic-123').upvote({id: 123, callback: callback});
       $('#topic2-123').upvote({id: 123, callback: callback});
       $('#topic3-123').upvote({id: 123, callback: callback});
+
+      $(".voteClick").click(function(){
+        if($("#authBtn").html() == 'Login'){
+          location.href = "login.html";
+        }
+        else {
+          console.log("record vote");
+        }
+      });
     </script>
   </body>
 </html>

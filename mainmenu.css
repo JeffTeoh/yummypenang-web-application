@@ -15,9 +15,10 @@
 	}
 }
 
-/*.container {
-	margin: 0;
-}*/
+/* navbar */
+#authBtn {
+	cursor: pointer;
+}
 
 .nopadding {
 	padding: 0;
