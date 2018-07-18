@@ -183,6 +183,41 @@
         $('#topic2-123').upvote({id: 123, callback: callback});
         $('#topic3-123').upvote({id: 123, callback: callback});
 
+        //update to user's vote database
+        var email = $("#userEmail").text();
+        var user = email.replace('@', '%40').replace('.', '%2E');
+        var items = $("#categoryList li");        
+        
+        //track user's upvote and display when loading
+        checkUpvoteRef = firebase.database().ref('userUpvote').child(user).child(category);
+        checkUpvoteRef.once("value", function(snapshot){
+          snapshot.forEach(function(childSnapshot){
+            var upvoteObj = childSnapshot.val();
+            for(var x = 1; x < items.length + 1; x++) {
+              var validKey = $("#key" + x).text();
+              if(upvoteObj.key == validKey) {
+                $("#topic" + x).upvote();
+                $("#topic" + x).upvote({upvoted: 1});
+              }
+            }
+          });
+        });
+
+        //track user's downvote and display when loading
+        checkDownvoteRef = firebase.database().ref('userDownvote').child(user).child(category);
+        checkDownvoteRef.once("value", function(snapshot){
+          snapshot.forEach(function(childSnapshot){
+            var downvoteObj = childSnapshot.val();
+            for(var x = 1; x < items.length + 1; x++) {
+              var validKey = $("#key" + x).text();
+              if(downvoteObj.key == validKey) {
+                $("#topic" + x).upvote();
+                $("#topic" + x).upvote({downvoted: 1});
+              }
+            }
+          });
+        });
+
         $(".voteClick").click(function(){
           if($("#authBtn").html() == 'Login'){
             location.href = "login.html";
@@ -202,6 +237,59 @@
                 voteRef.child(indexKey).update({totalVote: vote});
               }
             });
+          }
+        });
+        
+        $(".voteUp").click(function(){
+          var bool = $(this).hasClass('upvote-on');
+          var id = $(this).parent().attr('id');
+          var index = id.substr(-1);
+          var indexName = $("#name" + index).text();
+          var indexKey = $("#key" + index).text();
+          var userObj = {};
+
+          if (bool) {
+            //upload user vote to db
+            userObj.name = indexName;
+            userObj.key = indexKey;
+
+            var upvoteRef = firebase.database().ref('userUpvote').child(user);
+            upvoteRef.child(category).child(indexKey).update(userObj);
+
+            //remove downvote
+            var downvoteRef = firebase.database().ref('userDownvote').child(user);
+            downvoteRef.child(category).child(indexKey).remove();
+          }
+          else {
+            //remove user vote from db
+            var upvoteRef = firebase.database().ref('userUpvote').child(user);
+            upvoteRef.child(category).child(indexKey).remove();
+          }
+        });
+
+        $(".voteDown").click(function(){
+          var bool = $(this).hasClass('downvote-on');
+          var id = $(this).parent().attr('id');
+          var index = id.substr(-1);
+          var indexName = $("#name" + index).text();
+          var indexKey = $("#key" + index).text();
+          var userObj = {};
+          if (bool) {
+            //upload user vote to db
+            userObj.name = indexName;
+            userObj.key = indexKey;
+
+            var downvoteRef = firebase.database().ref('userDownvote').child(user);
+            downvoteRef.child(category).child(indexKey).update(userObj);
+
+            //remove upvote
+            var upvoteRef = firebase.database().ref('userUpvote').child(user);
+            upvoteRef.child(category).child(indexKey).remove();
+          }
+          else {
+            //remove user vote from db
+            var downvoteRef = firebase.database().ref('userDownvote').child(user);
+            downvoteRef.child(category).child(indexKey).remove();
           }
         });
       });
