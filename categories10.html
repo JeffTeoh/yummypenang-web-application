@@ -23,109 +23,23 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item mr-1">
-            <a class="nav-link" id="signupBtn" href="#">Register</a>
+            <b class="nav-link" id="userEmail"></b>
+          </li>
+          <li class="nav-item mr-1">
+            <a class="nav-link d-none" id="adminBtn" href="admin.html">Admin</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="loginBtn" href="#">Login</a>
+            <a class="nav-link" id="authBtn"></a>
           </li>
         </ul>
       </div>
     </nav>
 
-    <ul class="list-group mt-5">
-      <li class="list-group-item">
-        <div class="container">
-          <div class="row">
-            <div class="col-10">
-              <div class="row">
-                <div class="col-md-4 nopadding">
-                  <img src="img/categories/ansonroad.jpg" alt="Anson Road Market" class="img-fluid">
-                </div>
-                <div class="col-md-4 nopadding">
-                  <a href="https://www.google.com/maps/place/Anson+Road+Market/@5.4161614,100.3185846,17z/data=!4m8!1m2!2m1!1sanson+road+market+pancake!3m4!1s0x304ac3bbe4fdc0e3:0x1c1915ec9f104eb!8m2!3d5.4159577!4d100.3208744" target="_blank">
-                    <img src="https://maps.googleapis.com/maps/api/staticmap?autoscale=2&size=350x254&maptype=roadmap&key=AIzaSyDJ-8RmXqcL0Xo_7P3GOI5k2siN2QPsmew&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7Canson+road+market" alt="Google Map of Anson Road Market" class="img-fluid">
-                  </a>
-                </div>
-                <div class="col-md-2 nobreak text-left" style="color: black">
-                  <p><b>Anson Road Market</b></p>
-                  <p>Anson Road</p>
-                  <p>Opening Hours: 6:00am - 1:00pm</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-2 vote">
-              <div id="topic" class="upvote">
-                <a class="upvote"></a>
-                <span class="count">0</span>
-                <a class="downvote"></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="container">
-          <div class="row">
-            <div class="col-10">
-              <div class="row">
-                <div class="col-md-4 nopadding">
-                  <img src="img/categories/pulautikus.jpg" alt="Pulau Tikus Hawker Center" class="img-fluid">
-                </div>
-                <div class="col-md-4 nopadding">
-                  <a href="https://www.google.com/maps/place/Pulau+Tikus+Hawker+Center/@5.4353198,100.3060767,16z/data=!4m8!1m2!2m1!1spulau+tikus+hawker+center!3m4!1s0x304ac3a9c3aab5af:0x2bfdc1aacae7f1c0!8m2!3d5.4305012!4d100.3120048?hl=en" target="_blank">
-                    <img src="https://maps.googleapis.com/maps/api/staticmap?autoscale=2&size=350x254&maptype=roadmap&key=AIzaSyDJ-8RmXqcL0Xo_7P3GOI5k2siN2QPsmew&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7Cpulau+tikus+hawker+center" alt="Google Map of Pulau Tikus Hawker Center" class="img-fluid">
-                  </a>
-                </div>
-                <div class="col-md-2 nobreak text-left" style="color: black">
-                  <p><b>Pulau Tikus Hawker Center</b></p>
-                  <p>B1-12B, Jalan Pasar</p>
-                  <p>Opening Hours: 4:30pm - 10:30pm</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-2 vote">
-              <div id="topic2" class="upvote">
-                <a class="upvote"></a>
-                <span class="count">0</span>
-                <a class="downvote"></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="container">
-          <div class="row">
-            <div class="col-10">
-              <div class="row">
-                <div class="col-md-4 nopadding">
-                  <img src="img/categories/bmmck.jpg" alt="BM Cathy Charcoal Pancake" class="img-fluid">
-                </div>
-                <div class="col-md-4 nopadding">
-                  <a href="https://www.google.com/maps/place/BM+Cathy+Charcoal+Pancake/@5.362323,100.4615353,17z/data=!3m1!4b1!4m5!3m4!1s0x304ac8eb690af415:0x15ecdc1378ab5527!8m2!3d5.362323!4d100.463724" target="_blank">
-                    <img src="https://maps.googleapis.com/maps/api/staticmap?autoscale=2&size=350x254&maptype=roadmap&key=AIzaSyDJ-8RmXqcL0Xo_7P3GOI5k2siN2QPsmew&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7CBM+Cathy+Charcoal+Pancake" alt="Google Map of BM Cathy Charcoal Pancake" class="img-fluid">
-                  </a>
-                </div>
-                <div class="col-md-2 nobreak text-left" style="color: black">
-                  <p><b>BM Cathy Charcoal Pancake</b></p>
-                  <p>Jalan Aston</p>
-                  <p>Opening Hours: 12:00pm - 3:00pm</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-2 vote">
-              <div id="topic3" class="upvote">
-                <a class="upvote"></a>
-                <span class="count">0</span>
-                <a class="downvote"></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </li>
+    <ul class="list-group mt-5" id="categoryList">
+      <!--Insert from database-->
     </ul>
 
-    <footer class="footer mt-5">
+    <footer class="footer d-none mt-5">
       <div class="container pt-5">
         <div class="text-center" style="font-size: 2rem">
           <b>Any place you wish to recommend? Let us know your suggestion!</b>
@@ -180,21 +94,208 @@
     <script src="mapsearch.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJ-8RmXqcL0Xo_7P3GOI5k2siN2QPsmew&libraries=places&callback=initAutocomplete"
       async defer></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+    <script src="config.js"></script>
+    <script src="initApp.js"></script>
     <script>
-      $('#topic').upvote();
-      $('#topic2').upvote();
-      $('#topic3').upvote();
+      $("#authBtn").click(function(){
+        if($("#authBtn").html() == 'Login') {
+          location.href = "login.html";
+        }
+        else {
+          firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+          }).catch(function(error) {
+            // An error happened.
+          });
+          location.reload();
+        }
+      });
 
-      var callback = function(data) {
-        $.ajax({
-          url: '/vote',
-          type: 'post',
-          data: { id: data.id, up: data.upvoted, down: data.downvoted }
+      //load data from firebase realtime database
+      var category = $(document).find("title").text();
+      var foodRef = firebase.database().ref('foodCat').child(category).orderByChild('totalVote');
+      var foodObj;
+      var i = 1; //counter for each items
+
+      foodRef.once("value",function(snapshot){
+        snapshot.forEach(function(childSnapshot){
+          foodObj = childSnapshot.val();
+          var name = foodObj.name;
+          var address = foodObj.address;
+          var opHours = foodObj.operationHours;
+          var phone = foodObj.phone;
+          var image = foodObj.image;
+          var link = foodObj.link;
+          var staticMap = foodObj.staticMap;
+          var vote = foodObj.totalVote;
+          var key = foodObj.key;
+
+          $("#categoryList").prepend(
+          '<li class="list-group-item">' +
+            '<div class="container">' +
+              '<div class="row">' +
+                '<div class="col-10">' +
+                  '<div class="row">' +
+                    '<div class="col-md-4 nopadding">' +
+                       '<img src="' + image + '" alt="' + name + '" class="img-fluid">' +
+                    '</div>' +
+                    '<div class="col-md-4 nopadding">' +
+                      '<a href="' + link + '" target="_blank">' +
+                        '<img src="' + staticMap + '" alt="Google Map of ' + name + '" class="img-fluid">' +
+                      '</a>' +
+                    '</div>' +
+                    '<div class="col-md-2 nobreak text-left" style="color: black;">' +
+                      '<p><b id="name' + i + '">' + name + '</b></p>' +
+                      '<p>' + address + '</p>' +
+                      '<p>Opening Hours: ' + opHours + '</p>' +
+                      '<p>Phone: ' + phone + '</p>' +
+                      '<p class="d-none" id="key' + i + '">' + key + '</p>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+                '<div class="col-2 vote">' +
+                  '<div id="topic' + i + '" class="upvote">' +
+                    '<a class="upvote voteUp voteClick"></a>' +
+                    '<span class="count">' + vote + '</span>' +
+                    '<a class="downvote voteDown voteClick"></a>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</li>');
+          i += 1;
         });
-      };
-      $('#topic-123').upvote({id: 123, callback: callback});
-      $('#topic2-123').upvote({id: 123, callback: callback});
-      $('#topic3-123').upvote({id: 123, callback: callback});
+        $(".footer").removeClass("d-none");
+
+        $('#topic1').upvote();
+        $('#topic2').upvote();
+        $('#topic3').upvote();
+
+        var callback = function(data) {
+          $.ajax({
+            url: '/vote',
+            type: 'post',
+            data: { id: data.id, up: data.upvoted, down: data.downvoted }
+          });
+        };
+        $('#topic1-123').upvote({id: 123, callback: callback});
+        $('#topic2-123').upvote({id: 123, callback: callback});
+        $('#topic3-123').upvote({id: 123, callback: callback});
+
+        //update to user's vote database
+        var email = $("#userEmail").text();
+        var user = email.replace('@', '%40').replace('.', '%2E');
+        var items = $("#categoryList li");        
+        
+        if($("#authBtn").html() != 'Login'){
+          //track user's upvote and display when loading
+          checkUpvoteRef = firebase.database().ref('userUpvote').child(user).child(category);
+          checkUpvoteRef.once("value", function(snapshot){
+            snapshot.forEach(function(childSnapshot){
+              var upvoteObj = childSnapshot.val();
+              for(var x = 1; x < items.length + 1; x++) {
+                var validKey = $("#key" + x).text();
+                if(upvoteObj.key == validKey) {
+                  $("#topic" + x).upvote();
+                  $("#topic" + x).upvote({upvoted: 1});
+                }
+              }
+            });
+          });
+
+          //track user's downvote and display when loading
+          checkDownvoteRef = firebase.database().ref('userDownvote').child(user).child(category);
+          checkDownvoteRef.once("value", function(snapshot){
+            snapshot.forEach(function(childSnapshot){
+              var downvoteObj = childSnapshot.val();
+              for(var x = 1; x < items.length + 1; x++) {
+                var validKey = $("#key" + x).text();
+                if(downvoteObj.key == validKey) {
+                  $("#topic" + x).upvote();
+                  $("#topic" + x).upvote({downvoted: 1});
+                }
+              }
+            });
+          });
+        }
+
+        $(".voteClick").click(function(){
+          if($("#authBtn").html() == 'Login'){
+            location.href = "login.html";
+          }
+          else {
+            //update vote in database
+            var id = $(this).parent().attr('id');
+            var index = id.substr(-1);
+            var indexName = $("#name" + index).text();
+            var indexKey = $("#key" + index).text();
+            var vote = parseInt($(this).siblings().text());
+            
+            snapshot.forEach(function(childSnapshot){
+              var voteObj = childSnapshot.val();
+              if (voteObj.name == indexName) {
+                voteRef = firebase.database().ref('foodCat').child(category);
+                voteRef.child(indexKey).update({totalVote: vote});
+              }
+            });
+          }
+        });
+
+        $(".voteUp").click(function(){
+          var bool = $(this).hasClass('upvote-on');
+          var id = $(this).parent().attr('id');
+          var index = id.substr(-1);
+          var indexName = $("#name" + index).text();
+          var indexKey = $("#key" + index).text();
+          var userObj = {};
+
+          if (bool) {
+            //upload user vote to db
+            userObj.name = indexName;
+            userObj.key = indexKey;
+
+            var upvoteRef = firebase.database().ref('userUpvote').child(user);
+            upvoteRef.child(category).child(indexKey).update(userObj);
+
+            //remove downvote
+            var downvoteRef = firebase.database().ref('userDownvote').child(user);
+            downvoteRef.child(category).child(indexKey).remove();
+          }
+          else {
+            //remove user vote from db
+            var upvoteRef = firebase.database().ref('userUpvote').child(user);
+            upvoteRef.child(category).child(indexKey).remove();
+          }
+        });
+
+        $(".voteDown").click(function(){
+          var bool = $(this).hasClass('downvote-on');
+          var id = $(this).parent().attr('id');
+          var index = id.substr(-1);
+          var indexName = $("#name" + index).text();
+          var indexKey = $("#key" + index).text();
+          var userObj = {};
+          if (bool) {
+            //upload user vote to db
+            userObj.name = indexName;
+            userObj.key = indexKey;
+
+            var downvoteRef = firebase.database().ref('userDownvote').child(user);
+            downvoteRef.child(category).child(indexKey).update(userObj);
+
+            //remove upvote
+            var upvoteRef = firebase.database().ref('userUpvote').child(user);
+            upvoteRef.child(category).child(indexKey).remove();
+          }
+          else {
+            //remove user vote from db
+            var downvoteRef = firebase.database().ref('userDownvote').child(user);
+            downvoteRef.child(category).child(indexKey).remove();
+          }
+        });
+      });
     </script>
   </body>
 </html>

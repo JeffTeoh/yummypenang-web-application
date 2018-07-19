@@ -8,6 +8,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" />
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/3.1.1/firebase-ui-auth.css" />
     <link rel="stylesheet" href="mainmenu.css">
 
     <title>Login</title>
@@ -18,79 +20,8 @@
       <a class="navbar-brand" href="mainmenu.html">YUMMY PENANG</a>
     </nav>
 
-    <div class="container">
-      <div class="row">
-        <div id="loginbox" class="mt-5 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
-          <div class="panel panel-info">
-            <div class="panel-heading">
-              <div class="panel-title">Login</div>
-              <div style="float: right; font-size: 80%; position: relative; top: -10px;"><a href="#">Forget password?</a></div>
-            </div>
-            <div class="panel-body p-3">
-              <form id="loginform" role="form" autocomplete="off">
-                <div class="input-group mb-3">
-                   <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                  </div>
-                  <input id="loginEmail" type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon" name="email" required>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                  </div>
-                  <input id="loginPsw" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon" required>
-                </div>
-                <div class="form-group mt-1">
-                  <button type="submit" class="btn btn-success" id="loginBtn">Login</button>
-                </div>
-                <div class="form-group mt-2">
-                  <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
-          	        Don't have an account! 
-          	      	<a href="#" id="goRegister">
-          	          Register Here
-          	      	</a>
-          	      </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-        <div id="registerbox" class="mt-5 col-md-6 offset-md-3 col-sm-8 offset-sm-2 d-none">
-          <div class="panel panel-info">
-            <div class="panel-heading">
-              <div class="panel-title">Register</div>
-              <div style="float: right; font-size: 80%; position: relative; top: -10px;">
-                <a href="#" id="goLogin">Login</a>
-              </div>
-            </div>
-            <div class="panel-body p-3">
-              <form id="registerform" role="form" autocomplete="off">
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <div>
-                    <input id="regEmail" type="email" id="email" class="form-control" placeholder="Email" required>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="psw">Password</label>
-                  <div>
-                    <input id="regPsw" type="password" id="psw" class="form-control" placeholder="Password" required>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="confirmpsw">Confirm password</label>
-                  <div>
-                    <input id="regConPsw" type="password" id="confirmpsw" class="form-control" placeholder="Confirm password" required>
-                  </div>
-                </div>
-                <div class="form-group mt-1">
-                  <button type="submit" class="btn btn-primary" id="registerBtn">Register</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="mt-5">
+      <div id="firebaseui-auth-container"></div>
     </div>
 
     <!-- Optional JavaScript -->
@@ -99,30 +30,45 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>    
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+    <script src="config.js"></script>
     <script>
-      $("#loginBtn").click(function(){
-        //login to account
-      });
+      var uiConfig = {
+        callbacks: {
+          signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+            // User successfully signed in.
+            // Return type determines whether we continue the redirect automatically
+            // or whether we leave that to developer to handle.
+            return true;
+          },
+          uiShown: function() {
+            // The widget is rendered.
+            // Hide the loader.
+            //document.getElementById('loader').style.display = 'none';
+          }
+        },
+        credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM,
+        // Will use redirect for IDP Providers sign-in flow.
+        signInFlow: 'redirect',
+        'credentialHelper': firebaseui.auth.CredentialHelper.NONE,
+        signInSuccessUrl: 'mainmenu.html',
+        signInOptions: [
+          {
+            // Specify providers you want to offer your users.
+            provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            requireDisplayName: false
+          }
+        ],
+        // Terms of service url.
+        tosUrl: 'https://policies.google.com/terms'
+      };
 
-      $("#registerBtn").click(function(){
-        //register to account
-      });
+      // Initialize the FirebaseUI Widget using Firebase.
+      var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
-      $("#goRegister").click(function(){
-        $("#loginbox").addClass("d-none");
-        $("#registerbox").removeClass("d-none");
-        $(":input").val('');
-        document.title = "Register";
-      });
-
-      $("#goLogin").click(function(){
-        $("#loginbox").removeClass("d-none");
-        $("#registerbox").addClass("d-none");
-        document.title = "Login";
-      });
-
-      $("#loginform").validate();
-      $("#registerform").validate();
+      // The start method will wait until the DOM is loaded.
+      ui.start('#firebaseui-auth-container', uiConfig);
     </script>
   </body>
 </html>
