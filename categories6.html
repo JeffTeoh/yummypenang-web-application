@@ -39,7 +39,7 @@
       <!--Insert from database-->
     </ul>
 
-    <footer class="footer mt-5">
+    <footer class="footer d-none mt-5">
       <div class="container pt-5">
         <div class="text-center" style="font-size: 2rem">
           <b>Any place you wish to recommend? Let us know your suggestion!</b>
@@ -167,6 +167,7 @@
           '</li>');
           i += 1;
         });
+        $(".footer").removeClass("d-none");
 
         $('#topic1').upvote();
         $('#topic2').upvote();
@@ -188,35 +189,37 @@
         var user = email.replace('@', '%40').replace('.', '%2E');
         var items = $("#categoryList li");
         
-        //track user's upvote and display when loading
-        checkUpvoteRef = firebase.database().ref('userUpvote').child(user).child(category);
-        checkUpvoteRef.once("value", function(snapshot){
-          snapshot.forEach(function(childSnapshot){
-            var upvoteObj = childSnapshot.val();
-            for(var x = 1; x < items.length + 1; x++) {
-              var validKey = $("#key" + x).text();
-              if(upvoteObj.key == validKey) {
-                $("#topic" + x).upvote();
-                $("#topic" + x).upvote({upvoted: 1});
+        if($("#authBtn").html() != 'Login'){
+          //track user's upvote and display when loading
+          checkUpvoteRef = firebase.database().ref('userUpvote').child(user).child(category);
+          checkUpvoteRef.once("value", function(snapshot){
+            snapshot.forEach(function(childSnapshot){
+              var upvoteObj = childSnapshot.val();
+              for(var x = 1; x < items.length + 1; x++) {
+                var validKey = $("#key" + x).text();
+                if(upvoteObj.key == validKey) {
+                  $("#topic" + x).upvote();
+                  $("#topic" + x).upvote({upvoted: 1});
+                }
               }
-            }
+            });
           });
-        });
 
-        //track user's downvote and display when loading
-        checkDownvoteRef = firebase.database().ref('userDownvote').child(user).child(category);
-        checkDownvoteRef.once("value", function(snapshot){
-          snapshot.forEach(function(childSnapshot){
-            var downvoteObj = childSnapshot.val();
-            for(var x = 1; x < items.length + 1; x++) {
-              var validKey = $("#key" + x).text();
-              if(downvoteObj.key == validKey) {
-                $("#topic" + x).upvote();
-                $("#topic" + x).upvote({downvoted: 1});
+          //track user's downvote and display when loading
+          checkDownvoteRef = firebase.database().ref('userDownvote').child(user).child(category);
+          checkDownvoteRef.once("value", function(snapshot){
+            snapshot.forEach(function(childSnapshot){
+              var downvoteObj = childSnapshot.val();
+              for(var x = 1; x < items.length + 1; x++) {
+                var validKey = $("#key" + x).text();
+                if(downvoteObj.key == validKey) {
+                  $("#topic" + x).upvote();
+                  $("#topic" + x).upvote({downvoted: 1});
+                }
               }
-            }
+            });
           });
-        });
+        }
 
         $(".voteClick").click(function(){
           if($("#authBtn").html() == 'Login'){
