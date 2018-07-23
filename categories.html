@@ -52,20 +52,20 @@
             <div class="suggestion-body p-3" >
               <form id="loginform" role="form" autocomplete="off">
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Name">
+                  <input type="text" id="name" class="form-control" placeholder="Name">
                 </div>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Address">
+                  <input type="text" id="address" class="form-control" placeholder="Address">
                 </div>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Operation Hours">
+                  <input type="text" id="opHours" class="form-control" placeholder="Operation Hours">
                 </div>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Phone">
+                  <input type="text" id="phone" class="form-control" placeholder="Phone">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Upload</span>
+                    <span class="input-group-text">Image</span>
                   </div>
                   <div class="custom-file">
                     <input type="file" class="custom-file-input" id="inputGroupFile">
@@ -76,7 +76,7 @@
                   <input id="mapsearch" class="form-control" type="text" placeholder="Location">
                 </div>
                 <div class="form-group mt-1">
-                  <button type="submit" class="btn btn-success" id="loginBtn">Submit</button>
+                  <button class="btn btn-success" id="loginBtn">Submit</button>
                 </div>
               </form>
             </div>
@@ -295,6 +295,51 @@
             downvoteRef.child(category).child(indexKey).remove();
           }
         });
+      });
+
+      //update label of input type file
+      $('.custom-file-input').on('change', function() { 
+        let fileName = $(this).val().split('\\').pop(); 
+        $(this).next('.custom-file-label').addClass("selected").html(fileName); 
+      });
+
+      $("#loginBtn").click(function(e){
+        e.preventDefault();
+
+        //upload image
+        var imageUpRef = firebase.storage().ref();
+        var imageUp = $("#inputGroupFile").get(0).files[0];
+        var image;
+        var name = imageUp.name;
+        var metadata = {
+          contentType: imageUp.type
+        }
+        var task = imageUpRef.child('test/' + name).put(imageUp, metadata);
+
+        task.on('state_changed', function(snapshot) {
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+              case firebase.storage.TaskState.PAUSED: // or 'paused'
+                console.log('Upload is paused');
+                break;
+              case firebase.storage.TaskState.RUNNING: // or 'running'
+                console.log('Upload is running');
+                break;
+            }
+          }, function(error) {
+              //handle unsuccessful uploads
+          }, function() {
+            // Upload completed successfully, now we can get the download URL
+            task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+              image = downloadURL;
+              console.log('File available at', image);
+            });
+          }
+
+          //upload all input form data to database (?)
+        );
       });
     </script>
   </body>
