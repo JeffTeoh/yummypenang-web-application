@@ -52,31 +52,31 @@
             <div class="suggestion-body p-3" >
               <form id="loginform" role="form" autocomplete="off">
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Name">
+                  <input type="text" id="name" class="form-control" placeholder="Name">
                 </div>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Address">
+                  <input id="mapsearch" class="form-control" type="text" placeholder="Address">
                 </div>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Operation Hours">
+                  <span class="mr-1">Operation Hours:</span>
+                  <input id="openHours" type="time" name="open-opTime">
+                  <span class="mx-1">-</span>
+                  <input id="closeHours" type="time" name="close-opTime">
                 </div>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Phone">
+                  <input type="text" id="phone" class="form-control" placeholder="Phone">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Upload</span>
+                    <span class="input-group-text">Image</span>
                   </div>
                   <div class="custom-file">
                     <input type="file" class="custom-file-input" id="inputGroupFile">
                     <label class="custom-file-label" for="inputGroupFile">Choose file</label>
                   </div>
                 </div>
-                <div class="input-group mb-3">
-                  <input id="mapsearch" class="form-control" type="text" placeholder="Location">
-                </div>
                 <div class="form-group mt-1">
-                  <button type="submit" class="btn btn-success" id="loginBtn">Submit</button>
+                  <button class="btn btn-success" id="loginBtn">Submit</button>
                 </div>
               </form>
             </div>
@@ -87,7 +87,7 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <script src="jquery-upvote/lib/jquery.upvote.js"></script>
@@ -169,25 +169,14 @@
         });
         $(".footer").removeClass("d-none");
 
-        $('#topic1').upvote();
-        $('#topic2').upvote();
-        $('#topic3').upvote();
-
-        var callback = function(data) {
-          $.ajax({
-            url: '/vote',
-            type: 'post',
-            data: { id: data.id, up: data.upvoted, down: data.downvoted }
-          });
-        };
-        $('#topic1-123').upvote({id: 123, callback: callback});
-        $('#topic2-123').upvote({id: 123, callback: callback});
-        $('#topic3-123').upvote({id: 123, callback: callback});
+        var items = $("#categoryList li");
+        for(var x = 1; x < items.length + 1; x++) {
+          $("#topic" + x).upvote();
+        }
 
         //update to user's vote database
         var email = $("#userEmail").text();
         var user = email.replace('@', '%40').replace('.', '%2E');
-        var items = $("#categoryList li");        
         
         if($("#authBtn").html() != 'Login'){
           //track user's upvote and display when loading
@@ -294,6 +283,143 @@
             var downvoteRef = firebase.database().ref('userDownvote').child(user);
             downvoteRef.child(category).child(indexKey).remove();
           }
+        });
+      });
+
+      //update label of input type file
+      $('.custom-file-input').on('change', function() { 
+        let fileName = $(this).val().split('\\').pop(); 
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+      });
+
+      $("#loginBtn").click(function(e){
+        e.preventDefault();
+
+        const urlPromise = new Promise((resolve, reject) => {
+          //upload image
+          var imageUpRef = firebase.storage().ref();
+          var imageUp = $("#inputGroupFile").get(0).files[0];
+          var image;
+          var name = imageUp.name;
+          var metadata = {
+            contentType: imageUp.type
+          }
+          var task = imageUpRef.child('test/' + name).put(imageUp, metadata);
+
+          task.on('state_changed', function(snapshot) {
+              // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+              var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log('Upload is ' + progress + '% done');
+              switch (snapshot.state) {
+                case firebase.storage.TaskState.PAUSED: // or 'paused'
+                  console.log('Upload is paused');
+                  break;
+                case firebase.storage.TaskState.RUNNING: // or 'running'
+                  console.log('Upload is running');
+                  break;
+              }
+            }, function(error) {
+              //handle unsuccessful uploads
+            }, function() {
+              // Upload completed successfully, now we can get the download URL
+              task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                image = downloadURL;
+                resolve(image);
+              });
+            }
+          );
+        });
+
+        urlPromise.then((image) => {
+          //get value of form
+          var category = $(document).find("title").text();
+
+          //generate mapmaker and url map link
+          var name = $("#name").val();
+          var cName = name.toLowerCase().replace(/\s/g, '+');
+          var staticMap = "https://maps.googleapis.com/maps/api/staticmap?autoscale=2&size=350x254&maptype=roadmap&key=AIzaSyDJ-8RmXqcL0Xo_7P3GOI5k2siN2QPsmew&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7C" + cName;
+          var link = "https://www.google.com/maps/place/" + cName;
+
+          //format time
+          var openTime = $("#openHours").val();
+          var closeTime = $("#closeHours").val();
+
+          var openTimeSplit = openTime.split(':'),
+            hours,
+            minutes,
+            meridian;
+          hours = openTimeSplit[0];
+          minutes = openTimeSplit[1];
+          if (hours > 12) {
+            meridian = 'pm';
+            hours -= 12;
+          } else if (hours < 12) {
+            meridian = 'am';
+            if (hours == 0) {
+              hours = 12;
+            }
+          } else {
+            meridian = 'pm';
+          }
+          var cOpenTime = hours + ':' + minutes + meridian;
+
+          var closeTimeSplit = closeTime.split(':'),
+            hours,
+            minutes,
+            meridian;
+          hours = closeTimeSplit[0];
+          minutes = closeTimeSplit[1];
+          if (hours > 12) {
+            meridian = 'pm';
+            hours -= 12;
+          } else if (hours < 12) {
+            meridian = 'am';
+            if (hours == 0) {
+              hours = 12;
+            }
+          } else {
+            meridian = 'pm';
+          }
+          var cCloseTime = hours + ':' + minutes + meridian;          
+          var time = cOpenTime + " - " + cCloseTime;
+
+          var phone = $("#phone").val();
+          var mapmaker = $("#mapsearch").val();
+          var image = image;
+
+          var foodObj = {};
+          var foodObjKey = foodObjKey ? foodObjKey : firebase.database().ref().child('suggestion').push().key;
+          var key = foodObjKey;
+          foodObj[foodObjKey] = {
+            name: name,
+            address: mapmaker,
+            operationHours: time,
+            phone: phone,
+            key: key,
+            image: image,
+            link: link,
+            staticMap: staticMap,
+            totalVote: 0
+          };
+
+          console.log(foodObj);
+          firebase.database().ref('suggestion').child(category).update(foodObj);
+          alert("Thank you for your suggestion");
+          
+          $.ajax({
+            url:"email.php", //the page containing php script
+            type: "post", //request type,
+            success:function(result){
+              
+            }
+          });
+
+          $("#name").val('');
+          $("#openHours").val('');
+          $("#closeHours").val('');
+          $("#phone").val('');
+          $(".custom-file-label").html('Choose file');
+          $("#mapsearch").val('');
         });
       });
     </script>
