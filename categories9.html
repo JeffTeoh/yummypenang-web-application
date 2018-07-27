@@ -304,7 +304,7 @@
           var metadata = {
             contentType: imageUp.type
           }
-          var task = imageUpRef.child('test/' + name).put(imageUp, metadata);
+          var task = imageUpRef.child('categories/' + name).put(imageUp, metadata);
 
           task.on('state_changed', function(snapshot) {
               // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded

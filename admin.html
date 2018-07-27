@@ -13,6 +13,7 @@
     <title>Admin</title>
   </head>
   <body>
+    <!--top navigation bar-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <a class="navbar-brand" href="mainmenu.html">YUMMY PENANG</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,10 +23,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item mr-1">
-            <a class="nav-link" id="signupBtn" href="#">Register</a>
+            <b class="nav-link" id="userEmail"></b>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="loginBtn" href="#">Login</a>
+            <a class="nav-link" id="authBtn"></a>
           </li>
         </ul>
       </div>
@@ -34,7 +35,7 @@
     <div class="container">
       <div class="dropdown mt-5">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown button
+          Laksa
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" href="#">Laksa</a>
@@ -54,159 +55,200 @@
     <div class="container mt-5">
       <b>Suggestion</b>
     </div>
-    <ul class="list-group mt-1">
-      <li class="list-group-item">
-        <div class="container">
-          <div class="row">
-            <div class="col-10">
-              <div class="row">
-                <div class="col-md-4 nopadding">
-                  <img src="img/categories/bmkulim.jpg" alt="Laksa Kelang Lama" class="img-fluid">
-                </div>
-                <div class="col-md-4 nopadding">
-                  <a href="https://www.google.com/maps/place/Laksa+Kelang+Lama/@5.3721127,100.4495566,12z/data=!4m8!1m2!2m1!1sLaksa+Kelang+Lama!3m4!1s0x304ac8f05b1da185:0xab29e154f4d03dad!8m2!3d5.3541024!4d100.4713929" target="_blank">
-                    <img src="https://maps.googleapis.com/maps/api/staticmap?autoscale=2&size=350x254&maptype=roadmap&key=AIzaSyDJ-8RmXqcL0Xo_7P3GOI5k2siN2QPsmew&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7CLaksa+Kelang+Lama" alt="Google Map of Laksa Kelang Lama" class="img-fluid">
-                  </a>
-                </div>
-                <div class="col-md-2 info nobreak text-left" style="color: black;">
-                  <p><b>Laksa Kelang Lama</b></p>
-                  <p>Jalan Kulim, Taman Jaya, 14000 Bukit Mertajam</p>
-                  <p>Opening Hours: 12:00am – 4:30am</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <!-- Button (Double) -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="approvereject"></label>
-            <div class="col-md-3 offset-md-9">
-              <button name="approve" class="btn btn-success" id="approve">Approve</button>
-              <button name="reject" class="btn btn-danger" id="cancel">Reject</button>
-            </div>
-          </div>
-        </div>
-      </li>
+    <ul class="list-group mt-1" id="suggestionList">
+      <!--Insert from database-->
     </ul>
 
     <div class="container mt-4">
       <b>Current List</b>
-    </div>
-    <!--Laksa-->
-    <ul class="list-group mt-1">
-      <li class="list-group-item">
-        <div class="container">
-          <div class="row">
-            <div class="col-10">
-              <div class="row">
-                <div class="col-md-4 nopadding">
-                  <img src="img/categories/airitamlaksa.jpg" alt="Pasar Air Itam Laksa" class="img-fluid">
-                </div>
-                <div class="col-md-4 nopadding">
-                  <a href="https://www.google.com/maps/place/Pasar+Air+Itam+Laksa/@5.4012909,100.27598,17z/data=!3m1!4b1!4m5!3m4!1s0x304ac2175d561a33:0x41c9e1dde0fd15f6!8m2!3d5.4012909!4d100.2781687" target="_blank">
-                    <img src="https://maps.googleapis.com/maps/api/staticmap?autoscale=2&size=350x254&maptype=roadmap&key=AIzaSyDJ-8RmXqcL0Xo_7P3GOI5k2siN2QPsmew&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7CPasar+Air+Itam+Laksa" alt="Google Map of Pasar Air Itam Laksa" class="img-fluid">
-                  </a>
-                </div>
-                <div class="col-md-2 info nobreak text-left" style="color: black;">
-                  <p><b>Pasar Air Itam Laksa</b></p>
-                  <p>Jalan Pasar Road, 11500 Air Itam</p>
-                  <p>Opening Hours: 11:30am – 8:00pm</p>
-                  <p>Phone: 012-500 7063</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-2">
-              <div id="topic2" class="upvote">
-                <a class="upvote"></a>
-                <span class="count">0</span>
-                <a class="downvote"></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="container">
-          <div class="row">
-            <div class="col-10">
-              <div class="row">
-                <div class="col-md-4 nopadding">
-                  <img src="img/categories/joohooicafe.jpg" alt="Joo Hooi Cafe" class="img-fluid">
-                </div>
-                <div class="col-md-4 nopadding">
-                  <a href="https://www.google.com/maps/place/Joo+Hooi+Cafe/@5.4171666,100.3284255,17z/data=!3m1!4b1!4m5!3m4!1s0x304ac396f0955fe1:0x41214f7126ce5a28!8m2!3d5.4171666!4d100.3306142" target="_blank">
-                    <img src="https://maps.googleapis.com/maps/api/staticmap?autoscale=2&size=350x254&maptype=roadmap&key=AIzaSyDJ-8RmXqcL0Xo_7P3GOI5k2siN2QPsmew&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7Cjoo+hooi+cafe" alt="Google Map of Joo Hooi Cafe" class="img-fluid">
-                  </a>
-                </div>
-                <div class="col-md-2 info nobreak text-left" style="color: black">
-                  <p><b>Joo Hooi Cafe</b></p>
-                  <p>475, Jalan Penang</p>
-                  <p>Opening Hours: 10:30am – 5:30pm</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-2">
-              <div id="topic2" class="upvote">
-                <a class="upvote"></a>
-                <span class="count">0</span>
-                <a class="downvote"></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="container">
-          <div class="row">
-            <div class="col-10">
-              <div class="row">
-                <div class="col-md-4 nopadding">
-                  <img src="img/categories/gurneydrive.jpg" alt="Gurney Drive Hawker Centre" class="img-fluid">
-                </div>
-                <div class="col-md-4 nopadding">
-                  <a href="https://www.google.com/maps/place/Gurney+Drive+Hawker+Centre/@5.4401385,100.3067147,17z/data=!3m1!4b1!4m5!3m4!1s0x304ac30639aac903:0x8e7f6fe543f145f8!8m2!3d5.4401385!4d100.3089034" target="_blank">
-                    <img src="https://maps.googleapis.com/maps/api/staticmap?autoscale=2&size=350x254&maptype=roadmap&key=AIzaSyDJ-8RmXqcL0Xo_7P3GOI5k2siN2QPsmew&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7Cgurney+drive+hawker+centre" alt="Google Map of Gurney Drive Hawker Centre" class="img-fluid">
-                  </a>
-                </div>
-                <div class="col-md-2 info nobreak text-left" style="color: black">
-                  <p><b>Gurney Drive Hawker Centre</b></p>
-                  <p>Persiaran Gurney</p>
-                  <p>Opening Hours: 6:00pm – 12:00am</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-2">
-              <div id="topic3" class="upvote">
-                <a class="upvote"></a>
-                <span class="count">0</span>
-                <a class="downvote"></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </li>
+    </div>    
+    <ul class="list-group mt-1" id="categoryList">
+      <!--Insert from database-->
     </ul>
-
-    <!--Char Koay Teow-->
-    <!--Fried Oyster-->
-    <!--Cendol-->
-    <!--Hae Mee-->
-    <!--Wantan Mee-->
-    <!--Curry Mee-->
-    <!--Loh Bak-->
-    <!--Rojak-->
-    <!--Mang Chang Kuih-->
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <script src="jquery-upvote/lib/jquery.upvote.js"></script>
-    <script>      
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+    <script src="config.js"></script>
+    <script src="initApp.js"></script>
+    <script src="loadDefault.js"></script>
+    <script>
       $(".dropdown-item").click(function(){
-        console.log($(this).html());
+        $("#dropdownMenuButton").text($(this).html());
+        var category = $(this).html();
+        $("#suggestionList li").remove();
+        $("#categoryList li").remove();
+
+        //display suggestion items
+        var suggRef = firebase.database().ref('suggestion').child(category);
+        var suggObj;
+        var i = 1; //counter for each items
+
+        suggRef.once("value",function(snapshot){
+          snapshot.forEach(function(childSnapshot){
+            suggObj = childSnapshot.val();
+            var name = suggObj.name;
+            var address = suggObj.address;
+            var opHours = suggObj.operationHours;
+            var phone = suggObj.phone;
+            var image = suggObj.image;
+            var link = suggObj.link;
+            var staticMap = suggObj.staticMap;
+            var vote = suggObj.totalVote;
+            var key = suggObj.key;
+            
+            $("#suggestionList").prepend(
+            '<li class="list-group-item">' +
+              '<div class="container">' +
+                '<div class="row">' +
+                  '<div class="col-10">' +
+                    '<div class="row">' +
+                      '<div class="col-md-4 nopadding">' +
+                        '<img src="' + image + '" alt="' + name + '" class="img-fluid">' +
+                      '</div>' +
+                      '<div class="col-md-4 nopadding">' +
+                        '<a href="' + link + '" target="_blank">' +
+                          '<img src="' + staticMap + '" alt="Google Map of ' + name + '" class="img-fluid">' +
+                        '</a>' +
+                      '</div>' +
+                      '<div class="col-md-2 nobreak text-left" style="color: black;">' +
+                        '<p><b id="name' + i + '">' + name + '</b></p>' +
+                        '<p>' + address + '</p>' +
+                        '<p>Opening Hours: ' + opHours + '</p>' +
+                        '<p>Phone: ' + phone + '</p>' +
+                        '<p class="d-none" id="key' + i + '">' + key + '</p>' +
+                      '</div>' +
+                    '</div>' +
+                  '</div>' +
+                  '<div class="col-2 vote">' +
+                    '<div id="topic' + i + '" class="upvote">' +
+                      '<a class="upvote voteUp voteClick"></a>' +
+                      '<span class="count">' + vote + '</span>' +
+                      '<a class="downvote voteDown voteClick"></a>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="container">' +
+                '<!-- Button (Double) -->' +
+                '<div class="form-group">' +
+                  '<label class="col-md-4 control-label" for="approvereject"></label>' +
+                  '<div class="col-md-3 offset-md-9">' +
+                    '<button name="approve" class="btn btn-success" id="approve">Approve</button>' +
+                    '<button name="reject" class="btn btn-danger ml-1" id="cancel">Reject</button>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+            '</li>');
+            i += 1;
+          });
+
+          $(".approve").click(function(){
+            var id = $(this).attr('id');
+            var index = id.substr(-1);
+            var indexKey = $("#key" + index).text();
+            var tempCategoryName = $("#dropdownMenuButton").html();
+            var categoryName = tempCategoryName.replace(/\s/g, '');
+
+            var suggTempRef = firebase.database().ref('suggestion').child(categoryName);
+            var suggTempObj;
+            var i = 1; //counter for each items
+
+            suggTempRef.once("value",function(snapshot){
+              snapshot.forEach(function(childSnapshot){
+                suggTempObj = childSnapshot.val();
+                if (suggTempObj.key == indexKey) {
+                  firebase.database().ref('foodCat').child(categoryName).child(indexKey).update(suggTempObj);
+                  firebase.database().ref('suggestion').child(categoryName).child(indexKey).remove();
+                }
+              });
+            });
+            location.reload();
+          });
+
+          $(".reject").click(function(){
+            var id = $(this).attr('id');
+            var index = id.substr(-1);
+            var indexKey = $("#key" + index).text();
+            
+            var delSuggRef = firebase.database().ref('suggestion').child(category);
+            delSuggRef.child(indexKey).remove();
+            location.reload();
+          });
+        });
+
+        var foodRef = firebase.database().ref('foodCat').child(category).orderByChild('totalVote');
+        var foodObj;
+        var i = 1; //counter for each items
+
+        foodRef.once("value",function(snapshot){
+          snapshot.forEach(function(childSnapshot){
+            foodObj = childSnapshot.val();
+            var name = foodObj.name;
+            var address = foodObj.address;
+            var opHours = foodObj.operationHours;
+            var phone = foodObj.phone;
+            var image = foodObj.image;
+            var link = foodObj.link;
+            var staticMap = foodObj.staticMap;
+            var vote = foodObj.totalVote;
+            var key = foodObj.key;
+            
+            $("#categoryList").prepend(
+            '<li class="list-group-item">' +
+              '<div class="container">' +
+                '<div class="row">' +
+                  '<div class="col-10">' +
+                    '<div class="row">' +
+                      '<div class="col-md-4 nopadding">' +
+                        '<img src="' + image + '" alt="' + name + '" class="img-fluid">' +
+                      '</div>' +
+                      '<div class="col-md-4 nopadding">' +
+                        '<a href="' + link + '" target="_blank">' +
+                          '<img src="' + staticMap + '" alt="Google Map of ' + name + '" class="img-fluid">' +
+                        '</a>' +
+                      '</div>' +
+                      '<div class="col-md-2 nobreak text-left" style="color: black;">' +
+                        '<p><b id="name' + i + '">' + name + '</b></p>' +
+                        '<p>' + address + '</p>' +
+                        '<p>Opening Hours: ' + opHours + '</p>' +
+                        '<p>Phone: ' + phone + '</p>' +
+                        '<p class="d-none" id="key' + i + '">' + key + '</p>' +
+                      '</div>' +
+                    '</div>' +
+                  '</div>' +
+                  '<div class="col-2 vote">' +
+                    '<div id="topic' + i + '" class="upvote">' +
+                      '<a class="upvote voteUp voteClick"></a>' +
+                      '<span class="count">' + vote + '</span>' +
+                      '<a class="downvote voteDown voteClick"></a>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+            '</li>');
+            i += 1;
+          });
+        });
+      });
+
+      $("#authBtn").click(function(){
+        if($("#authBtn").html() == 'Login') {
+          location.href = "login.html";
+        }
+        else {
+          firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+            location.href = "mainmenu.html"
+          }).catch(function(error) {
+            // An error happened.
+          });
+        }
       });
     </script>
   </body>
