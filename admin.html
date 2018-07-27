@@ -231,9 +231,35 @@
                   '</div>' +
                 '</div>' +
               '</div>' +
+              '<div class="container">' +
+                '<!-- Button (Double) -->' +
+                '<div class="form-group">' +
+                  '<div class="col-md-3 offset-md-9">' +
+                    '<button class="btn edit btn-success" id="edit' + i + '">Edit</button>' +
+                    '<button class="btn delete btn-danger ml-1" id="delete' + i + '">Delete</button>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
             '</li>');
             i += 1;
           });
+        });
+
+        $(".edit").click(function(){
+          var id = $(this).attr('id');
+          var index = id.substr(-1);
+
+          //modal for edit
+        });
+
+        $(".delete").click(function(){
+          var id = $(this).attr('id');
+          var index = id.substr(-1);
+          var indexKey = $("#key" + index).text();
+          
+          var delRef = firebase.database().ref('foodCat').child(category);
+          delRef.child(indexKey).remove();
+          location.reload();
         });
       });
 
