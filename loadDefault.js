@@ -164,11 +164,18 @@ $( document ).ready(function() {
     $(".edit").click(function(){
       var id = $(this).attr('id');
       var index = id.substr(-1);
+
+      //modal for edit
     });
 
     $(".delete").click(function(){
       var id = $(this).attr('id');
       var index = id.substr(-1);
+      var indexKey = $("#key" + index).text();
+      
+      var delRef = firebase.database().ref('foodCat').child(category);
+      delRef.child(indexKey).remove();
+      location.reload();
     });
   });  
 });
