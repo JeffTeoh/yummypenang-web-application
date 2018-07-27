@@ -55,10 +55,13 @@
                   <input type="text" id="name" class="form-control" placeholder="Name">
                 </div>
                 <div class="input-group mb-3">
-                  <input type="text" id="address" class="form-control" placeholder="Address">
+                  <input id="mapsearch" class="form-control" type="text" placeholder="Address">
                 </div>
                 <div class="input-group mb-3">
-                  <input type="text" id="opHours" class="form-control" placeholder="Operation Hours">
+                  <span class="mr-1">Operation Hours:</span>
+                  <input id="openHours" type="time" name="open-opTime">
+                  <span class="mx-1">-</span>
+                  <input id="closeHours" type="time" name="close-opTime">
                 </div>
                 <div class="input-group mb-3">
                   <input type="text" id="phone" class="form-control" placeholder="Phone">
@@ -71,9 +74,6 @@
                     <input type="file" class="custom-file-input" id="inputGroupFile">
                     <label class="custom-file-label" for="inputGroupFile">Choose file</label>
                   </div>
-                </div>
-                <div class="input-group mb-3">
-                  <input id="mapsearch" class="form-control" type="text" placeholder="Location">
                 </div>
                 <div class="form-group mt-1">
                   <button class="btn btn-success" id="loginBtn">Submit</button>
@@ -295,14 +295,6 @@
       $("#loginBtn").click(function(e){
         e.preventDefault();
 
-        $.ajax({
-          url:"email.php", //the page containing php script
-          type: "post", //request type,
-          success:function(result){
-             
-          }
-        });
-
         const urlPromise = new Promise((resolve, reject) => {
           //upload image
           var imageUpRef = firebase.storage().ref();
@@ -341,11 +333,57 @@
         urlPromise.then((image) => {
           //get value of form
           var category = $(document).find("title").text();
+
+          //generate mapmaker and url map link
           var name = $("#name").val();
-          var address = $("#address").val();
-          var time = $("#opHours").val();
+          var cName = name.toLowerCase().replace(/\s/g, '+');
+          var staticMap = "https://maps.googleapis.com/maps/api/staticmap?autoscale=2&size=350x254&maptype=roadmap&key=AIzaSyDJ-8RmXqcL0Xo_7P3GOI5k2siN2QPsmew&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7C" + cName;
+          var link = "https://www.google.com/maps/place/" + cName;
+
+          //format time
+          var openTime = $("#openHours").val();
+          var closeTime = $("#closeHours").val();
+
+          var openTimeSplit = openTime.split(':'),
+            hours,
+            minutes,
+            meridian;
+          hours = openTimeSplit[0];
+          minutes = openTimeSplit[1];
+          if (hours > 12) {
+            meridian = 'pm';
+            hours -= 12;
+          } else if (hours < 12) {
+            meridian = 'am';
+            if (hours == 0) {
+              hours = 12;
+            }
+          } else {
+            meridian = 'pm';
+          }
+          var cOpenTime = hours + ':' + minutes + meridian;
+
+          var closeTimeSplit = closeTime.split(':'),
+            hours,
+            minutes,
+            meridian;
+          hours = closeTimeSplit[0];
+          minutes = closeTimeSplit[1];
+          if (hours > 12) {
+            meridian = 'pm';
+            hours -= 12;
+          } else if (hours < 12) {
+            meridian = 'am';
+            if (hours == 0) {
+              hours = 12;
+            }
+          } else {
+            meridian = 'pm';
+          }
+          var cCloseTime = hours + ':' + minutes + meridian;          
+          var time = cOpenTime + " - " + cCloseTime;
+
           var phone = $("#phone").val();
-          //var mapurl = $("#mapurl").val();
           var mapmaker = $("#mapsearch").val();
           var image = image;
 
@@ -354,26 +392,33 @@
           var key = foodObjKey;
           foodObj[foodObjKey] = {
             name: name,
-            address: address,
-            operationHours: opHours,
+            address: mapmaker,
+            operationHours: time,
             phone: phone,
             key: key,
             image: image,
-            //link: mapurl,
-            staticMap: mapmaker,
+            link: link,
+            staticMap: staticMap,
             totalVote: 0
           };
 
           console.log(foodObj);
           firebase.database().ref('suggestion').child(category).update(foodObj);
           alert("Thank you for your suggestion");
+          
+          $.ajax({
+            url:"email.php", //the page containing php script
+            type: "post", //request type,
+            success:function(result){
+              
+            }
+          });
 
           $("#name").val('');
-          $("#address").val('');
-          $("#opHours").val('');
+          $("#openHours").val('');
+          $("#closeHours").val('');
           $("#phone").val('');
           $(".custom-file-label").html('Choose file');
-          //$("#mapurl").val('');
           $("#mapsearch").val('');
         });
       });
