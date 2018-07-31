@@ -34,9 +34,7 @@
 
     <div class="container">
       <div class="dropdown mt-5">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Laksa
-        </button>
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Laksa</button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" href="#">Laksa</a>
           <a class="dropdown-item" href="#">Char Koay Teow</a>
@@ -65,6 +63,42 @@
     <ul class="list-group mt-1" id="categoryList">
       <!--Insert from database-->
     </ul>
+
+    <!-- Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editModalLabel">Edit</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <input type="text" id="editName" class="form-control" placeholder="Name">
+            </div>
+            <div class="input-group mb-3">
+              <input id="editAddress" class="form-control" type="text" placeholder="Address">
+            </div>
+            <div class="input-group mb-3">
+              <span class="mr-1">Operation Hours:</span>
+              <input id="editOpenHours" type="time" name="open-opTime">
+              <span class="mx-1">-</span>
+              <input id="editCloseHours" type="time" name="close-opTime">
+            </div>
+            <div class="input-group mb-3">
+              <input type="text" id="editPhone" class="form-control" placeholder="Phone">
+            </div>
+            <div class="d-none" id="editKey"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="save">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -239,7 +273,7 @@
                 '<!-- Button (Double) -->' +
                 '<div class="form-group">' +
                   '<div class="col-md-3 offset-md-9">' +
-                    '<button class="btn edit btn-success" id="edit' + i + '">Edit</button>' +
+                    '<button class="btn editBtn btn-success" id="edit' + i + '" data-toggle="modal" data-target="#editModal">Edit</button>' +
                     '<button class="btn delete btn-danger ml-1" id="delete' + i + '">Delete</button>' +
                   '</div>' +
                 '</div>' +
@@ -248,11 +282,79 @@
             i += 1;
           });
 
-          $(".edit").click(function(){
+          $(".editBtn").click(function(){
             var id = $(this).attr('id');
             var index = id.substr(-1);
-            
-            //modal for edit
+            var passKey = $("#key" + index).html();
+            var items = $("#categoryList li");
+      
+            //load from db to edit input
+            checkEditRef = firebase.database().ref('foodCat').child(category);
+            checkEditRef.once("value", function(snapshot){
+              snapshot.forEach(function(childSnapshot){
+                var editObj = childSnapshot.val();
+                for(var x = 1; x < items.length + 1; x++) {
+                  if(editObj.key == passKey) {
+                    $("#editKey").text(passKey);
+                    $("#editName").val(editObj.name);
+                    $("#editAddress").val(editObj.address);
+                    $("#editPhone").val(editObj.phone);
+
+                    var time = editObj.operationHours;
+                    var sepTime = time.split("-");
+                    var openHours = sepTime[0].replace(/\s/g, "");
+                    var closeHours = sepTime[1].replace(/\s/g, "");
+
+                    var opMeridian = openHours.substr(-2);
+                    var clMeridian = closeHours.substr(-2);
+
+                    if (opMeridian == "pm") {
+                      var hour = parseFloat(openHours.slice(0,-5));
+                      var tempMinute = openHours.substr(openHours.lastIndexOf(":")+1);
+                      var minute = tempMinute.substr(0,2);
+
+                      if (hour != 12) {
+                        hour = hour + 12;
+                      }
+                      setOpen = hour + ":" + minute;
+                      $("#editOpenHours").val(setOpen);
+                    } else if (opMeridian == "am") {
+                      var hour = openHours.slice(0,-5);
+                      var tempMinute = openHours.substr(openHours.lastIndexOf(":")+1);
+                      var minute = tempMinute.substr(0,2);
+                      
+                      if (hour.length < 2) {
+                        hour = "0" + hour;
+                      }
+                      setOpen = hour + ":" + minute;
+                      $("#editOpenHours").val(setOpen);
+                    }
+
+                    if (clMeridian == "pm") {
+                      var hour = parseFloat(closeHours.slice(0,-5));
+                      var tempMinute = closeHours.substr(closeHours.lastIndexOf(":")+1);
+                      var minute = tempMinute.substr(0,2);
+
+                      if (hour != 12) {
+                        hour = hour + 12;
+                      }
+                      setClose = hour + ":" + minute;
+                      $("#editCloseHours").val(setClose);
+                    } else if (opMeridian == "am") {
+                      var hour = closeHours.slice(0,-5);
+                      var tempMinute = closeHours.substr(closeHours.lastIndexOf(":")+1);
+                      var minute = tempMinute.substr(0,2);
+
+                      if (hour.length < 2) {
+                        hour = "0" + hour;
+                      }
+                      setClose = hour + ":" + minute;
+                      $("#editCloseHours").val(setClose);
+                    }
+                  }
+                }
+              });
+            });            
           });
 
           $(".delete").click(function(){
@@ -281,6 +383,68 @@
             // An error happened.
           });
         }
+      });
+
+      $("#save").click(function(){
+        var category = $("#dropdownMenuButton").html();
+        var name = $("#editName").val();
+        var address = $("#editAddress").val()
+        var phone = $("#editPhone").val();
+        var key = $("#editKey").html();
+
+        //format time
+        var openTime = $("#editOpenHours").val();
+        var closeTime = $("#editCloseHours").val();
+
+        var openTimeSplit = openTime.split(':'),
+          hours,
+          minutes,
+          meridian;
+        hours = openTimeSplit[0];
+        minutes = openTimeSplit[1];
+        if (hours > 12) {
+          meridian = 'pm';
+          hours -= 12;
+        } else if (hours < 12) {
+          meridian = 'am';
+          if (hours == 0) {
+            hours = 12;
+          }
+        } else {
+          meridian = 'pm';
+        }
+        var cOpenTime = hours + ':' + minutes + meridian;
+
+        var closeTimeSplit = closeTime.split(':'),
+          hours,
+          minutes,
+          meridian;
+        hours = closeTimeSplit[0];
+        minutes = closeTimeSplit[1];
+        if (hours > 12) {
+          meridian = 'pm';
+          hours -= 12;
+        } else if (hours < 12) {
+          meridian = 'am';
+          if (hours == 0) {
+            hours = 12;
+          }
+        } else {
+          meridian = 'pm';
+        }
+        var cCloseTime = hours + ':' + minutes + meridian;
+        var time = cOpenTime + " - " + cCloseTime;
+
+        var editRef = firebase.database().ref().child('foodCat').child(category);
+        editRef.child(key).update({
+          name: name,
+          address: address,
+          phone: phone,
+          operationHours: time
+        })
+
+        alert("Update successfully");
+        location.reload();
       });
     </script>
   </body>
