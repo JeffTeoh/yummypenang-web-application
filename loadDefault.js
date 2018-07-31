@@ -65,36 +65,40 @@ $( document ).ready(function() {
     });
 
     $(".approve").click(function(){
-      var id = $(this).attr('id');
-      var index = id.substr(-1);
-      var indexKey = $("#key" + index).text();
-      var tempCategoryName = $("#dropdownMenuButton").html();
-      var categoryName = tempCategoryName.replace(/\s/g, '');
+      if(confirm("Are you confirm to approve?")) {
+        var id = $(this).attr('id');
+        var index = id.substr(-1);
+        var indexKey = $("#key" + index).text();
+        var tempCategoryName = $("#dropdownMenuButton").html();
+        var categoryName = tempCategoryName.replace(/\s/g, '');
 
-      var suggTempRef = firebase.database().ref('suggestion').child(categoryName);
-      var suggTempObj;
-      var i = 1; //counter for each items
+        var suggTempRef = firebase.database().ref('suggestion').child(categoryName);
+        var suggTempObj;
+        var i = 1; //counter for each items
 
-      suggTempRef.once("value",function(snapshot){
-        snapshot.forEach(function(childSnapshot){
-          suggTempObj = childSnapshot.val();
-          if (suggTempObj.key == indexKey) {
-            firebase.database().ref('foodCat').child(categoryName).child(indexKey).update(suggTempObj);
-            firebase.database().ref('suggestion').child(categoryName).child(indexKey).remove();
-          }
+        suggTempRef.once("value",function(snapshot){
+          snapshot.forEach(function(childSnapshot){
+            suggTempObj = childSnapshot.val();
+            if (suggTempObj.key == indexKey) {
+              firebase.database().ref('foodCat').child(categoryName).child(indexKey).update(suggTempObj);
+              firebase.database().ref('suggestion').child(categoryName).child(indexKey).remove();
+            }
+          });
         });
-      });
-      location.reload();
+        location.reload();
+      }
     });
 
     $(".reject").click(function(){
-      var id = $(this).attr('id');
-      var index = id.substr(-1);
-      var indexKey = $("#key" + index).text();
-      
-      var delSuggRef = firebase.database().ref('suggestion').child(category);
-      delSuggRef.child(indexKey).remove();
-      location.reload();
+      if(confirm("Are you confirm to reject?")){
+        var id = $(this).attr('id');
+        var index = id.substr(-1);
+        var indexKey = $("#key" + index).text();
+        
+        var delSuggRef = firebase.database().ref('suggestion').child(category);
+        delSuggRef.child(indexKey).remove();
+        location.reload();
+      }
     });
   });
 
@@ -152,7 +156,7 @@ $( document ).ready(function() {
           '<!-- Button (Double) -->' +
           '<div class="form-group">' +
             '<div class="col-md-3 offset-md-9">' +
-              '<button class="btn edit btn-success" id="edit' + i + '">Edit</button>' +
+              '<button class="btn editBtn btn-success" id="edit' + i + '" data-toggle="modal" data-target="#editModal">Edit</button>' +
               '<button class="btn delete btn-danger ml-1" id="delete' + i + '">Delete</button>' +
             '</div>' +
           '</div>' +
@@ -161,22 +165,92 @@ $( document ).ready(function() {
       i += 1;
     });
 
-    $(".edit").click(function(){
+    $(".editBtn").click(function(){
       var id = $(this).attr('id');
       var index = id.substr(-1);
+      var passKey = $("#key" + index).html();
+      var items = $("#categoryList li");
+      
+      //load from db to edit input
+      checkEditRef = firebase.database().ref('foodCat').child(category);
+      checkEditRef.once("value", function(snapshot){
+        snapshot.forEach(function(childSnapshot){
+          var editObj = childSnapshot.val();
+          for(var x = 1; x < items.length + 1; x++) {
+            if(editObj.key == passKey) {
+              $("#editKey").text(passKey);
+              $("#editName").val(editObj.name);
+              $("#editAddress").val(editObj.address);
+              $("#editPhone").val(editObj.phone);
 
-      //modal for edit
+              var time = editObj.operationHours;
+              var sepTime = time.split("-");
+              var openHours = sepTime[0].replace(/\s/g, "");
+              var closeHours = sepTime[1].replace(/\s/g, "");
+
+              var opMeridian = openHours.substr(-2);
+              var clMeridian = closeHours.substr(-2);
+
+              if (opMeridian == "pm") {
+                var hour = parseFloat(openHours.slice(0,-5));
+                var tempMinute = openHours.substr(openHours.lastIndexOf(":")+1);
+                var minute = tempMinute.substr(0,2);
+
+                if (hour != 12) {
+                  hour = hour + 12;
+                }
+                setOpen = hour + ":" + minute;
+                $("#editOpenHours").val(setOpen);
+              } else if (opMeridian == "am") {
+                var hour = openHours.slice(0,-5);
+                var tempMinute = openHours.substr(openHours.lastIndexOf(":")+1);
+                var minute = tempMinute.substr(0,2);
+
+                if (hour.length < 2) {
+                  hour = "0" + hour;
+                }
+                setOpen = hour + ":" + minute;
+                $("#editOpenHours").val(setOpen);
+              }
+
+              if (clMeridian == "pm") {
+                var hour = parseFloat(closeHours.slice(0,-5));
+                var tempMinute = closeHours.substr(closeHours.lastIndexOf(":")+1);
+                var minute = tempMinute.substr(0,2);
+
+                if (hour != 12) {
+                  hour = hour + 12;
+                }
+                setClose = hour + ":" + minute;
+                $("#editCloseHours").val(setClose);
+              } else if (opMeridian == "am") {
+                var hour = closeHours.slice(0,-5);
+                var tempMinute = closeHours.substr(closeHours.lastIndexOf(":")+1);
+                var minute = tempMinute.substr(0,2);
+
+                if (hour.length < 2) {
+                  hour = "0" + hour;
+                }
+                setClose = hour + ":" + minute;
+                $("#editCloseHours").val(setClose);
+              }
+            }
+          }
+        });
+      });
     });
 
     $(".delete").click(function(){
-      var id = $(this).attr('id');
-      var index = id.substr(-1);
-      var indexKey = $("#key" + index).text();
-      
-      var delRef = firebase.database().ref('foodCat').child(category);
-      delRef.child(indexKey).remove();
-      location.reload();
+      if(confirm("Are you confirm to delete?")){
+        var id = $(this).attr('id');
+        var index = id.substr(-1);
+        var indexKey = $("#key" + index).text();
+        
+        var delRef = firebase.database().ref('foodCat').child(category);
+        delRef.child(indexKey).remove();
+        location.reload();
+      }
     });
-  });  
+  });
 });
 
