@@ -65,36 +65,40 @@ $( document ).ready(function() {
     });
 
     $(".approve").click(function(){
-      var id = $(this).attr('id');
-      var index = id.substr(-1);
-      var indexKey = $("#key" + index).text();
-      var tempCategoryName = $("#dropdownMenuButton").html();
-      var categoryName = tempCategoryName.replace(/\s/g, '');
+      if(confirm("Are you confirm to approve?")) {
+        var id = $(this).attr('id');
+        var index = id.substr(-1);
+        var indexKey = $("#key" + index).text();
+        var tempCategoryName = $("#dropdownMenuButton").html();
+        var categoryName = tempCategoryName.replace(/\s/g, '');
 
-      var suggTempRef = firebase.database().ref('suggestion').child(categoryName);
-      var suggTempObj;
-      var i = 1; //counter for each items
+        var suggTempRef = firebase.database().ref('suggestion').child(categoryName);
+        var suggTempObj;
+        var i = 1; //counter for each items
 
-      suggTempRef.once("value",function(snapshot){
-        snapshot.forEach(function(childSnapshot){
-          suggTempObj = childSnapshot.val();
-          if (suggTempObj.key == indexKey) {
-            firebase.database().ref('foodCat').child(categoryName).child(indexKey).update(suggTempObj);
-            firebase.database().ref('suggestion').child(categoryName).child(indexKey).remove();
-          }
+        suggTempRef.once("value",function(snapshot){
+          snapshot.forEach(function(childSnapshot){
+            suggTempObj = childSnapshot.val();
+            if (suggTempObj.key == indexKey) {
+              firebase.database().ref('foodCat').child(categoryName).child(indexKey).update(suggTempObj);
+              firebase.database().ref('suggestion').child(categoryName).child(indexKey).remove();
+            }
+          });
         });
-      });
-      location.reload();
+        location.reload();
+      }
     });
 
     $(".reject").click(function(){
-      var id = $(this).attr('id');
-      var index = id.substr(-1);
-      var indexKey = $("#key" + index).text();
-      
-      var delSuggRef = firebase.database().ref('suggestion').child(category);
-      delSuggRef.child(indexKey).remove();
-      location.reload();
+      if(confirm("Are you confirm to reject?")){
+        var id = $(this).attr('id');
+        var index = id.substr(-1);
+        var indexKey = $("#key" + index).text();
+        
+        var delSuggRef = firebase.database().ref('suggestion').child(category);
+        delSuggRef.child(indexKey).remove();
+        location.reload();
+      }
     });
   });
 
@@ -164,19 +168,21 @@ $( document ).ready(function() {
     $(".edit").click(function(){
       var id = $(this).attr('id');
       var index = id.substr(-1);
-
+      
       //modal for edit
     });
 
     $(".delete").click(function(){
-      var id = $(this).attr('id');
-      var index = id.substr(-1);
-      var indexKey = $("#key" + index).text();
-      
-      var delRef = firebase.database().ref('foodCat').child(category);
-      delRef.child(indexKey).remove();
-      location.reload();
+      if(confirm("Are you confirm to delete?")){
+        var id = $(this).attr('id');
+        var index = id.substr(-1);
+        var indexKey = $("#key" + index).text();
+        
+        var delRef = firebase.database().ref('foodCat').child(category);
+        delRef.child(indexKey).remove();
+        location.reload();
+      }
     });
-  });  
+  });
 });
 
