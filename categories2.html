@@ -168,17 +168,17 @@
           i += 1;
         });
         $(".footer").removeClass("d-none");
-
-        var items = $("#categoryList li");
-        for(var x = 1; x < items.length + 1; x++) {
-          $("#topic" + x).upvote();
-        }
         
         //update to user's vote database
         var email = $("#userEmail").text();
         var user = email.replace('@', '%40').replace('.', '%2E');
 
         if($("#authBtn").html() != 'Login'){
+          var items = $("#categoryList li");
+          for(var x = 1; x < items.length + 1; x++) {
+            $("#topic" + x).upvote();
+          }
+          
           //track user's upvote and display when loading
           checkUpvoteRef = firebase.database().ref('userUpvote').child(user).child(category);
           checkUpvoteRef.once("value", function(snapshot){
